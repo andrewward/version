@@ -1,0 +1,11 @@
+{% macro input(name, id) %}
+<a href='http://localhost:5000/version/{{id}}' data-target="#{{id}}Modal" data-toggle="modal" class="btn btn-primary btn-lg">{{name}}</a>
+
+<!-- Modal -->
+<div class="modal fade" id="{{id}}Modal" tabindex="-1" role="dialog" aria-labelledby="{{id}}Label" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+    </div>
+  </div>
+</div>
+{% endmacro %}

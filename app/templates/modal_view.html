@@ -1,0 +1,26 @@
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+     <h4 class="modal-title">{{site}}</h4>
+</div>
+<div class="modal-body">
+        <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Server</th>
+                <th>Application Version</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for site,servers in info.iteritems()  %}
+            {% for server, version in servers.iteritems() %}
+            <tr>
+                <td>{{server}}</td>
+                <td>{{version}}</td>
+            </tr>
+            {% endfor %}
+        {% endfor %}
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+</div>
