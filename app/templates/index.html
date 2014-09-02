@@ -5,10 +5,13 @@
         <link href="{{url_for('static',filename='bootstrap.min.css')}}" rel="stylesheet" media="screen">
         <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
         <script src="{{url_for('static',filename='bootstrap.min.js')}}"></script>
+        <script src="{{url_for('static',filename='jquery.tablesorter.min.js')}}"></script>
     </head>
     <body>
+    <h1>Choose a site/application</h1>
+    <p> Cick one of the bottons bellow to see the current production version deployed</p>
         {% import 'modal.html' as modal %}
-        <div class="container">
+        <div class="container-fluid">
                 {% for site,id in site_mappings.iteritems()  %}
                 {{ modal.input(id, site) }}
                 {% endfor %}

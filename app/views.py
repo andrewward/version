@@ -1,6 +1,6 @@
 from config import apps, site_mappings
 from requests import get
-from flask import  render_template, jsonify
+from flask import  render_template
 from app import app
 
 @app.route('/')
@@ -14,6 +14,6 @@ def version(site):
         new_dict[site] = {}
         for server in apps[site]:
             new_dict[site][server] = get('http://' + server + '/ops/version.json').json()['version']
-        return render_template('modal_view.html', info=new_dict, site=site_mappings[site])
+        return render_template('modal_view.html', info=new_dict, site=site_mappings[site], id=site)
     else:
         return "Site not found"
