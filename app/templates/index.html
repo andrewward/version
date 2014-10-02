@@ -6,7 +6,7 @@
         <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
         <script src="{{url_for('static',filename='bootstrap.min.js')}}"></script>
         <script src="{{url_for('static',filename='jquery.tablesorter.min.js')}}"></script>
-        <style> .container { line-height: 150% } </style>
+        <style> .container { line-height: 150%; } .page-header { text-align: center; } p { text-align: center;}</style>
     </head>
     <body>
     <div class="page-header">
@@ -14,11 +14,13 @@
     </div>
     <p> Cick one of the buttons bellow to see the current production version deployed</p>
         {% import 'modal.html' as modal %}
-        <div class="container col-md-4">
+        <div class="container">
+        <div class="col-md-4 col-md-offset-4">
                 {% for site,id in site_mappings.iteritems()  %}
                 {{ modal.input(id, site) }}
                 <br>
                 {% endfor %}
+        </div>
         </div>
     </body>
 </html>
