@@ -1,67 +1,33 @@
-apps = {'ag': ['ag-web-01.atl.primedia.com',
-                    'ag-web-01.lax.primedia.com',
-                    'ag-web-02.atl.primedia.com',
-                    'ag-web-02.lax.primedia.com',
-                    'ag-web-03.atl.primedia.com',
-                    'ag-web-03.lax.primedia.com',
-                    'ag-web-04.atl.primedia.com',
-                    'ag-web-04.lax.primedia.com',
-                    'ag-web-05.atl.primedia.com',
-                    'ag-web-05.lax.primedia.com',
-                    'ag-web-06.atl.primedia.com',
-                    'ag-web-06.lax.primedia.com',
-                    'ag-web-07.atl.primedia.com',
-                    'ag-web-07.lax.primedia.com',
-                    'ag-web-08.atl.primedia.com',
-                    'ag-web-08.lax.primedia.com',
-                    'ag-web-09.atl.primedia.com',
-                    'ag-web-09.lax.primedia.com',
-                    'ag-web-10.atl.primedia.com',
-                    'ag-web-10.lax.primedia.com'],
-            'rentals': ['rentals-web-01.atl.primedia.com',
-                        'rentals-web-01.lax.primedia.com',
-                        'rentals-web-02.atl.primedia.com',
-                        'rentals-web-02.lax.primedia.com',
-                        'rentals-web-03.atl.primedia.com',
-                        'rentals-web-03.lax.primedia.com',
-                        'rentals-web-04.atl.primedia.com',
-                        'rentals-web-04.lax.primedia.com',
-                        'rentals-web-05.atl.primedia.com',
-                        'rentals-web-05.lax.primedia.com',
-                        'rentals-web-06.atl.primedia.com',
-                        'rentals-web-06.lax.primedia.com'],
-            'mag': ['mag-web-01.atl.primedia.com',
-                        'mag-web-01.lax.primedia.com',
-                        'mag-web-02.atl.primedia.com',
-                        'mag-web-02.lax.primedia.com',
-                        'mag-web-03.atl.primedia.com',
-                        'mag-web-03.lax.primedia.com',
-                        'mag-web-04.atl.primedia.com',
-                        'mag-web-04.lax.primedia.com',
-                        'mag-web-05.atl.primedia.com',
-                        'mag-web-05.lax.primedia.com'],
-            'mnhg': ['mnhg-web-01.atl.primedia.com',
-                        'mnhg-web-01.lax.primedia.com',
-                        'mnhg-web-02.atl.primedia.com',
-                        'mnhg-web-02.lax.primedia.com'],
-            'agsites': ['agsites-web-01.atl.primedia.com',
-                        'agsites-web-01.lax.primedia.com',
-                        'agsites-web-02.atl.primedia.com',
-                        'agsites-web-02.lax.primedia.com'],
-            'myag': ['myag-web-01.atl.primedia.com',
-                        'myag-web-02.atl.primedia.com'],
-            'rnrui': ['rnrui-web-01.atl.primedia.com',
-                        'rnrui-web-02.atl.primedia.com'],
-                        }
+apps_template = { 'ag' :        { 'number': 10, 'type': 'web', 'mirrored': True, 'display': 'www.apartmentguide.com' }, 
+                  'rentals':    { 'number': 6, 'type': 'web', 'mirrored': True, 'display': 'www.rentals.com' },
+                  'mag':        { 'number': 5, 'type': 'web', 'mirrored': True, 'display': 'm.apartmentguide.com' },
+                  'agsites':    { 'number': 2, 'type': 'web', 'mirrored': True, 'display': 'agsites.com' },
+                  'myag':       { 'number': 2, 'type': 'web', 'mirrored': False, 'display': 'my.apartmentguide.com'},
+                  'mnhg':       { 'number': 2, 'type': 'web', 'mirrored': True, 'display': 'm.newhomeguide.com' },
+                  'rnrui':      { 'number': 2, 'type': 'web', 'mirrored': False, 'display': 'reviews.apartmentguide.com' },
+                  'mobileapi':  { 'number': 2, 'type': 'service', 'mirrored': True, 'display': 'm.api.apartmentguide.com' },
+                  'metasaurus': { 'number': 2, 'type': 'service', 'mirrored': True, 'display': 'metasaurus' },
+                  'onesearch':  { 'number': 3, 'type': 'service', 'mirrored': True, 'display': 'onesearch.svc.primedia.com' },
+                  'zutron':  { 'number': 3, 'type': 'service', 'mirrored': True, 'display': 'zutron.primedia.com' }
+                }
 
+def generate_hosts(sites):
+   complete_dict = {}
+   for site, info in sites.iteritems():
+      complete_dict[site] = {}
+      if info['type'] == 'web':
+         middle = '-web-'
+      else:
+         middle = '-'
+      complete_dict[site]['atl'] = [ site + middle + str(x).zfill(2) + '.atl.primedia.com' for x in range(1,info['number']+1) ]
+      if info['mirrored']:
+         complete_dict[site]['lax'] = [ site + middle + str(x).zfill(2) + '.lax.primedia.com' for x in range(1,info['number']+1) ]
+      else:
+         complete_dict[site]['lax'] = [ 'none' ]
+   return complete_dict
 
-site_mappings = {
-    'ag': 'www.apartmentguide.com',
-    'rentals': 'www.rentals.com',
-    'mag': 'm.apartmentguide.com',
-    'agsites': 'agsites.com',
-    'mnhg': 'm.newhomeguide.com',
-    'agsites': 'agsites.com',
-    'myag': 'my.apartmentguide.com',
-    'rnrui': 'rnrui'
-}
+def generate_mappings(sites):
+   complete_dict = {}
+   for site, info in sites.iteritems():
+      complete_dict[site] = sites[site]['display']
+   return complete_dict

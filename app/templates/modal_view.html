@@ -1,10 +1,13 @@
-
+<style> h3 { text-align: center; } </style>
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
      <h4 class="modal-title">{{site}}</h4>
 </div>
 <div class="modal-body">
-        <table id="{{id}}table" class="table table-striped" class="tablesorter">
+        {% for app in info.values()  %}
+            {% for dc, servers in app.iteritems() %}
+        <table id="{{id}}{{dc}}table" class="table table-striped" class="tablesorter">
+        <h3>{{dc.upper()}}</h3>
         <thead>
             <tr>
                 <th>Server</th>
@@ -12,19 +15,22 @@
             </tr>
         </thead>
         <tbody>
-        {% for site,servers in info.iteritems()  %}
-            {% for server, version in servers.iteritems() %}
+        {% for server_name, version in servers.iteritems() %}
             <tr>
-                <td>{{server}}</td>
+                <td>{{server_name}}</td>
                 <td>{{version}}</td>
             </tr>
-            {% endfor %}
-        {% endfor %}
-</div>
-<script type="text/javascript">
+         {% endfor %}
+        </tbody>
+   <script type="text/javascript">
     $(document).ready(function(){
-$(function(){
-$("#{{id}}table").tablesorter();
-sortList[[1,0]]});
-});
-</script>
+      $(function(){
+         $("#{{id}}{{dc}}table").tablesorter({
+            sortList: [[0,0]]
+         });
+      });
+   })
+   </script>
+      {% endfor %}
+   {% endfor %}
+</div>

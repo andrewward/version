@@ -3,11 +3,4 @@ Jinja2==2.7.3
 MarkupSafe==0.23
 Werkzeug==0.9.6
 argparse==1.2.1
-beautifulsoup4==4.3.2
-gnureadline==6.3.3
-greenlet==0.4.3
-ipython==2.2.0
-itsdangerous==0.24
 requests==2.3.0
-stevedore==0.15
-wsgiref==0.1.2
